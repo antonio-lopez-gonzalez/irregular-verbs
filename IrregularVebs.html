@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verbos Irregulares en Inglés</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            padding: 10px 0;
+            z-index: 100;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .buttons {
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.2s;
+            font-weight: bold;
+        }
+        .check-button {
+            background-color: #007bff;
+        }
+        .check-button:hover {
+            background-color: #0056b3;
+        }
+        .show-button {
+            background-color: #28a745;
+        }
+        .show-button:hover {
+            background-color: #218838;
+        }
+        .reset-button {
+            background-color: #dc3545;
+        }
+        .reset-button:hover {
+            background-color: #c82333;
+        }
+        .correct {
+            border-color: #28a745 !important;
+            background-color: #d4edda;
+        }
+        .incorrect {
+            border-color: #dc3545 !important;
+            background-color: #f8d7da;
+        }
+        .answer {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+            display: none;
+        }
+        .table-container {
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verbos Irregulares en Inglés</h1>
+        
+        <div class="header">
+            <div class="buttons">
+                <div class="action-buttons">
+                    <button class="reset-button" onclick="resetAnswers()">Reiniciar</button>
+                    <button class="check-button" onclick="checkAnswers()">Verificar</button>
+                    <button class="show-button" onclick="toggleAnswers()">Mostrar Respuestas</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Infinitivo</th>
+                        <th>Pasado Simple</th>
+                        <th>Participio Pasado</th>
+                    </tr>
+                </thead>
+                <tbody id="verbTable">
+                    <!-- La tabla se llenará con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
