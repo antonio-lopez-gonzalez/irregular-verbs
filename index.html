@@ -5,102 +5,270 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verbos Irregulares en Inglés</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            max-width: 1000px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
+        
         .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             position: relative;
+            animation: fadeIn 0.5s ease-in;
         }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
         .header {
             position: sticky;
             top: 0;
-            background-color: white;
-            padding: 10px 0;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 20px;
             z-index: 100;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
+        
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        
         th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
+            padding: 16px;
             text-align: left;
+            border-bottom: 1px solid #e9ecef;
         }
+        
         th {
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
         }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+            transition: background-color 0.2s ease;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
         input {
             width: 100%;
-            padding: 8px;
+            padding: 12px;
             box-sizing: border-box;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
         .buttons {
             margin: 10px 0;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+        
         .action-buttons {
             display: flex;
-            gap: 10px;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
+        
         button {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             cursor: pointer;
             color: white;
-            transition: background-color 0.2s;
-            font-weight: bold;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1em;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
         }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
         .check-button {
-            background-color: #007bff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
+        
         .check-button:hover {
-            background-color: #0056b3;
+            background: linear-gradient(135deg, #5568d3 0%, #653a8f 100%);
         }
+        
         .show-button {
-            background-color: #28a745;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
         }
+        
         .show-button:hover {
-            background-color: #218838;
+            background: linear-gradient(135deg, #0d7a71 0%, #2dd369 100%);
         }
+        
         .reset-button {
-            background-color: #dc3545;
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
         }
+        
         .reset-button:hover {
-            background-color: #c82333;
+            background: linear-gradient(135deg, #d42a3e 0%, #e04a32 100%);
         }
+        
+        .shuffle-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .shuffle-button:hover {
+            background: linear-gradient(135deg, #d682e0 0%, #d94a5b 100%);
+        }
+        
         .correct {
-            border-color: #28a745 !important;
+            border-color: #38ef7d !important;
             background-color: #d4edda;
         }
+        
         .incorrect {
-            border-color: #dc3545 !important;
+            border-color: #eb3349 !important;
             background-color: #f8d7da;
         }
+        
         .answer {
             font-size: 0.9em;
-            color: #666;
-            margin-top: 5px;
+            color: #6c757d;
+            margin-top: 8px;
             display: none;
+            font-weight: 500;
+            padding: 4px 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
         }
+        
+        
         .table-container {
             overflow-y: auto;
+            max-height: 70vh;
+            border-radius: 12px;
+        }
+        
+        .table-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #653a8f 100%);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -111,9 +279,10 @@
         <div class="header">
             <div class="buttons">
                 <div class="action-buttons">
-                    <button class="reset-button" onclick="resetAnswers()">Reiniciar</button>
-                    <button class="check-button" onclick="checkAnswers()">Verificar</button>
-                    <button class="show-button" onclick="toggleAnswers()">Mostrar Respuestas</button>
+                    <button class="reset-button" onclick="resetAnswers()">🔄 Reiniciar</button>
+                    <button class="check-button" onclick="checkAnswers()">✓ Verificar</button>
+                    <button class="show-button" onclick="toggleAnswers()">👁️ Mostrar Respuestas</button>
+                    <button class="shuffle-button" onclick="shuffleVerbs()">🔀 Mezclar Verbos</button>
                 </div>
             </div>
         </div>

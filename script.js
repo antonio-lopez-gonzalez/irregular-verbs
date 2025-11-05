@@ -464,10 +464,22 @@ const irregularVerbs = [
   },
 ];
 
+// Función para mezclar aleatoriamente un array (algoritmo Fisher-Yates)
+function shuffleArray(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 // Función para crear la tabla de verbos
 function createVerbTable() {
   const tableBody = document.getElementById("verbTable");
-  irregularVerbs.forEach((verb) => {
+  // Mezclar los verbos aleatoriamente antes de crear la tabla
+  const shuffledVerbs = shuffleArray(irregularVerbs);
+  shuffledVerbs.forEach((verb) => {
     const row = document.createElement("tr");
     row.innerHTML = `
             <td>
@@ -484,7 +496,43 @@ function createVerbTable() {
             </td>
         `;
     tableBody.appendChild(row);
+    
+    // Agregar event listeners a los inputs para verificación automática al salir
+    const pastSimpleInput = row.querySelector(".past-simple");
+    const pastParticipleInput = row.querySelector(".past-participle");
+    
+    pastSimpleInput.addEventListener("blur", () => {
+      checkSingleInput(pastSimpleInput);
+    });
+    
+    pastParticipleInput.addEventListener("blur", () => {
+      checkSingleInput(pastParticipleInput);
+    });
   });
+}
+
+// Función para verificar un input individual
+function checkSingleInput(input) {
+  const baseClass = input.classList.contains("past-simple") ? "past-simple" : "past-participle";
+  
+  if (!input.value.trim()) {
+    // Si está vacío, remover solo las clases de correcto/incorrecto y mantener la clase base
+    input.className = baseClass;
+    return;
+  }
+
+  const verb = irregularVerbs.find((v) => v.base === input.dataset.verb);
+  if (!verb) return;
+
+  let isCorrect = false;
+  if (input.classList.contains("past-simple")) {
+    isCorrect = input.value.toLowerCase().trim() === verb.pastSimple.toLowerCase();
+  } else if (input.classList.contains("past-participle")) {
+    isCorrect = input.value.toLowerCase().trim() === verb.pastParticiple.toLowerCase();
+  }
+
+  // Establecer la clase base más la clase de resultado
+  input.className = `${baseClass} ${isCorrect ? "correct" : "incorrect"}`;
 }
 
 // Función para verificar las respuestas
@@ -511,13 +559,13 @@ function checkAnswers() {
 function toggleAnswers() {
   const answers = document.querySelectorAll(".answer");
   const button = document.querySelector(".show-button");
-  const isShowing = answers[0].style.display === "block";
+  const isShowing = answers[0].style.display === "inline-block";
 
   answers.forEach((answer) => {
-    answer.style.display = isShowing ? "none" : "block";
+    answer.style.display = isShowing ? "none" : "inline-block";
   });
 
-  button.textContent = isShowing ? "Mostrar Respuestas" : "Ocultar Respuestas";
+  button.textContent = isShowing ? "👁️ Mostrar Respuestas" : "👁️ Ocultar Respuestas";
 }
 
 // Función para reiniciar el formulario
@@ -535,12 +583,19 @@ function resetAnswers() {
 
   // Ocultar respuestas si están visibles
   const button = document.querySelector(".show-button");
-  if (answers[0].style.display === "block") {
+  if (answers[0].style.display === "inline-block") {
     answers.forEach((answer) => {
       answer.style.display = "none";
     });
-    button.textContent = "Mostrar Respuestas";
+    button.textContent = "👁️ Mostrar Respuestas";
   }
+}
+
+// Función para mezclar de nuevo los verbos y recargar la tabla
+function shuffleVerbs() {
+  const tableBody = document.getElementById("verbTable");
+  tableBody.innerHTML = "";
+  createVerbTable();
 }
 
 // Inicializar la tabla cuando se carga la página
