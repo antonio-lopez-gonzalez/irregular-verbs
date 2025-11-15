@@ -23,8 +23,9 @@
         padding: 20px;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
-        /* permitir scroll nativo en pantallas pequeñas */
+        /* permitir scroll nativo en pantallas pequeñas; evitar scroll horizontal de la página */
         overflow: auto;
+        overflow-x: hidden;
         width: 100%;
       }
 
@@ -92,8 +93,9 @@
         border-radius: 0;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         margin: 0;
-        /* para pantallas pequeñas la tabla puede scroll horizontal */
+        /* para pantallas pequeñas la tabla puede scroll horizontal si es necesario */
         min-width: 600px;
+        max-width: 100%;
       }
 
       /* Eliminar regla conflictiva de ancho para evitar desalineación entre cabecera y cuerpo */
@@ -302,6 +304,9 @@
         /* limitar la altura visible para que tbody sea desplazable. Ajustable si es necesario */
         max-height: calc(100vh - 220px);
         position: relative;
+        /* comportamiento táctil más natural en iOS/Android y evitar que el 'pan' horizontal arrastre la página */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
       }
 
       .table-container::-webkit-scrollbar {
@@ -430,6 +435,21 @@
           margin-bottom: 10px;
         }
 
+        /* Agrupar botones en móvil: 2 por fila */
+        .action-buttons {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+          align-items: center;
+        }
+
+        .action-buttons button {
+          width: 100%;
+          padding: 10px 12px;
+          font-size: 0.95em;
+          border-radius: 8px;
+        }
+
         table {
           font-size: 0.75em;
         }
@@ -446,11 +466,6 @@
         input {
           padding: 8px;
           font-size: 0.85em;
-        }
-
-        button {
-          padding: 12px 16px;
-          font-size: 0.9em;
         }
       }
     </style>
