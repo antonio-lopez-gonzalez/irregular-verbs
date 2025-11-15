@@ -496,15 +496,15 @@ function createVerbTable() {
             </td>
         `;
     tableBody.appendChild(row);
-    
+
     // Agregar event listeners a los inputs para verificación automática al salir
     const pastSimpleInput = row.querySelector(".past-simple");
     const pastParticipleInput = row.querySelector(".past-participle");
-    
+
     pastSimpleInput.addEventListener("blur", () => {
       checkSingleInput(pastSimpleInput);
     });
-    
+
     pastParticipleInput.addEventListener("blur", () => {
       checkSingleInput(pastParticipleInput);
     });
@@ -513,8 +513,10 @@ function createVerbTable() {
 
 // Función para verificar un input individual
 function checkSingleInput(input) {
-  const baseClass = input.classList.contains("past-simple") ? "past-simple" : "past-participle";
-  
+  const baseClass = input.classList.contains("past-simple")
+    ? "past-simple"
+    : "past-participle";
+
   if (!input.value.trim()) {
     // Si está vacío, remover solo las clases de correcto/incorrecto y mantener la clase base
     input.className = baseClass;
@@ -526,9 +528,11 @@ function checkSingleInput(input) {
 
   let isCorrect = false;
   if (input.classList.contains("past-simple")) {
-    isCorrect = input.value.toLowerCase().trim() === verb.pastSimple.toLowerCase();
+    isCorrect =
+      input.value.toLowerCase().trim() === verb.pastSimple.toLowerCase();
   } else if (input.classList.contains("past-participle")) {
-    isCorrect = input.value.toLowerCase().trim() === verb.pastParticiple.toLowerCase();
+    isCorrect =
+      input.value.toLowerCase().trim() === verb.pastParticiple.toLowerCase();
   }
 
   // Establecer la clase base más la clase de resultado
@@ -559,13 +563,21 @@ function checkAnswers() {
 function toggleAnswers() {
   const answers = document.querySelectorAll(".answer");
   const button = document.querySelector(".show-button");
-  const isShowing = answers[0].style.display === "inline-block";
+  const isShowing =
+    answers.length && getComputedStyle(answers[0]).display !== "none";
 
   answers.forEach((answer) => {
-    answer.style.display = isShowing ? "none" : "inline-block";
+    // usar display block para respuestas (divs)
+    answer.style.display = isShowing ? "none" : "block";
   });
 
-  button.textContent = isShowing ? "👁️ Mostrar Respuestas" : "👁️ Ocultar Respuestas";
+  // Actualizar etiqueta accesible (no sustituir el contenido del botón)
+  const sr = button.querySelector(".sr-only");
+  if (sr) {
+    sr.textContent = isShowing ? "Mostrar Respuestas" : "Ocultar Respuestas";
+  }
+  // indicar estado a tecnologías de asistencia
+  button.setAttribute("aria-pressed", String(!isShowing));
 }
 
 // Función para reiniciar el formulario
@@ -583,11 +595,13 @@ function resetAnswers() {
 
   // Ocultar respuestas si están visibles
   const button = document.querySelector(".show-button");
-  if (answers[0].style.display === "inline-block") {
+  if (answers.length && getComputedStyle(answers[0]).display !== "none") {
     answers.forEach((answer) => {
       answer.style.display = "none";
     });
-    button.textContent = "👁️ Mostrar Respuestas";
+    const sr = button.querySelector(".sr-only");
+    if (sr) sr.textContent = "Mostrar Respuestas";
+    button.setAttribute("aria-pressed", "false");
   }
 }
 

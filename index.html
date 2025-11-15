@@ -156,78 +156,58 @@
         justify-content: center;
       }
 
+      /* Botones principales: cuadrados con icono centrado */
       button {
-        padding: 12px 24px;
+        padding: 0;
         border: none;
-        border-radius: 10px;
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
         cursor: pointer;
         color: white;
-        transition: all 0.3s ease;
-        font-weight: 600;
-        font-size: 1em;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
         position: relative;
-        overflow: hidden;
+        overflow: visible;
       }
 
-      button::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: translate(-50%, -50%);
-        transition: width 0.6s, height 0.6s;
-      }
-
-      button:hover::before {
-        width: 300px;
-        height: 300px;
+      /* Visually hidden but accessible text for screen readers */
+      .sr-only {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0 0 0 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
       }
 
       button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.14);
       }
 
       button:active {
         transform: translateY(0);
       }
 
-      .check-button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      }
+      /* Botones: colores planos (sin gradiente) y estilo coherente */
+      .check-button { background: #5b6ff6; }
+      .check-button:hover { background: #4a57d9; }
 
-      .check-button:hover {
-        background: linear-gradient(135deg, #5568d3 0%, #653a8f 100%);
-      }
+      .show-button { background: #10b981; }
+      .show-button:hover { background: #0e9a68; }
 
-      .show-button {
-        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-      }
+      .reset-button { background: #ef4444; }
+      .reset-button:hover { background: #d33a3a; }
 
-      .show-button:hover {
-        background: linear-gradient(135deg, #0d7a71 0%, #2dd369 100%);
-      }
-
-      .reset-button {
-        background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
-      }
-
-      .reset-button:hover {
-        background: linear-gradient(135deg, #d42a3e 0%, #e04a32 100%);
-      }
-
-      .shuffle-button {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      }
-
-      .shuffle-button:hover {
-        background: linear-gradient(135deg, #d682e0 0%, #d94a5b 100%);
-      }
+      .shuffle-button { background: #f472b6; }
+      .shuffle-button:hover { background: #e2569f; }
 
       .correct {
         border-color: #38ef7d !important;
@@ -435,19 +415,19 @@
           margin-bottom: 10px;
         }
 
-        /* Agrupar botones en móvil: 2 por fila */
+        /* En móvil: mostrar los botones en 2 columnas pero usando los cuadrados definidos */
         .action-buttons {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
           gap: 10px;
           align-items: center;
+          justify-items: center;
         }
 
         .action-buttons button {
-          width: 100%;
-          padding: 10px 12px;
-          font-size: 0.95em;
-          border-radius: 8px;
+          width: 44px;
+          height: 44px;
+          padding: 0;
         }
 
         table {
@@ -476,11 +456,43 @@
 
     <div class="header">
       <div class="buttons">
-        <div class="action-buttons">
-          <button class="reset-button" onclick="resetAnswers()">🔄 Reiniciar</button>
-          <button class="check-button" onclick="checkAnswers()">✓ Verificar</button>
-          <button class="show-button" onclick="toggleAnswers()">👁️ Mostrar Respuestas</button>
-          <button class="shuffle-button" onclick="shuffleVerbs()">🔀 Mezclar Verbos</button>
+        <div class="action-buttons" role="toolbar" aria-label="Acciones">
+          <button class="reset-button" onclick="resetAnswers()" aria-label="Reiniciar">
+            <!-- SVG: refresh -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M21 12a9 9 0 10-3.2 6.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 3v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="sr-only">Reiniciar</span>
+          </button>
+
+          <button class="check-button" onclick="checkAnswers()" aria-label="Verificar">
+            <!-- SVG: check -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="sr-only">Verificar</span>
+          </button>
+
+          <button class="show-button" onclick="toggleAnswers()" aria-label="Mostrar respuestas" aria-pressed="false">
+            <!-- SVG: eye -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span class="sr-only">Mostrar Respuestas</span>
+          </button>
+
+          <button class="shuffle-button" onclick="shuffleVerbs()" aria-label="Mezclar verbs">
+            <!-- SVG: shuffle -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M16 3h5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 3L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 21h5v-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 21l9-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="sr-only">Mezclar Verbos</span>
+          </button>
         </div>
       </div>
     </div>
