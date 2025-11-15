@@ -29,6 +29,8 @@
         overflow: auto;
         overflow-x: hidden;
         width: 100%;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
       }
 
       .container {
@@ -399,7 +401,7 @@
         }
 
       .action-buttons {
-        gap: 10px;
+        gap: 22px;
       }
 
         /* keep action buttons square and on one line instead of full-width */
@@ -493,7 +495,7 @@
 
         input {
           padding: 8px;
-          font-size: 0.85em;
+          font-size: 16px; /* prevent iOS Safari auto-zoom on focus */
         }
       }
     </style>
