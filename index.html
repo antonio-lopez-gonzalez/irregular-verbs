@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Verbos Irregulares en Inglés</title>
+  <title>Verbos Irregulares en Inglés</title>
+  <!-- Google Material Symbols (icons) -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <style>
       * {
         margin: 0;
@@ -186,8 +188,16 @@
         transition: background 0.15s ease, transform 0.15s ease;
       }
 
-      /* icono en primer plano */
-      button svg { z-index: 1; width: 28px; height: 28px; }
+      /* icono en primer plano: soporta SVGs y Material Symbols */
+      button svg,
+      button .material-symbols-outlined {
+        z-index: 1;
+        width: auto;
+        height: auto;
+        font-size: 28px; /* controlamos tamaño de iconos de fuente */
+        line-height: 1;
+        display: inline-block;
+      }
 
   /* show-button: alternar eye / eye-off según aria-pressed */
   .show-button .icon-eye-off { display: none; }
@@ -484,51 +494,23 @@
       <div class="buttons">
         <div class="action-buttons" role="toolbar" aria-label="Acciones">
           <button class="reset-button" onclick="resetAnswers()" aria-label="Reiniciar">
-            <!-- SVG: refresh (más completo) -->
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M21 12a9 9 0 10-3.2 6.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M21 3v6h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M3.51 12.49a7 7 0 011.98-2.91" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
-            </svg>
+            <span class="material-symbols-outlined" aria-hidden="true">autorenew</span>
             <span class="sr-only">Reiniciar</span>
           </button>
 
           <button class="check-button" onclick="checkAnswers()" aria-label="Verificar">
-            <!-- SVG: check (círculo con tick) -->
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6" opacity="0.14" />
-              <path d="M7.5 12.5l2.5 2.5L16.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <span class="material-symbols-outlined" aria-hidden="true">done</span>
             <span class="sr-only">Verificar</span>
           </button>
 
           <button class="show-button" onclick="toggleAnswers()" aria-label="Mostrar respuestas" aria-pressed="false">
-            <!-- SVG: eye (visible when answers are hidden) -->
-            <svg class="icon-eye" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M2.5 12s4-6.5 9.5-6.5S21.5 12 21.5 12s-4 6.5-9.5 6.5S2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
-              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
-            </svg>
-            <!-- SVG: eye-off (bolder, high-contrast slash) -->
-            <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <!-- eye outline -->
-              <path d="M2 12s4-6.5 10-6.5S22 12 22 12s-4 6.5-10 6.5S2 12 2 12z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-              <!-- pupil -->
-              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8" fill="none" />
-              <!-- diagonal slash -->
-              <path d="M3 3l18 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+            <span class="material-symbols-outlined icon-eye" aria-hidden="true">visibility</span>
+            <span class="material-symbols-outlined icon-eye-off" aria-hidden="true">visibility_off</span>
             <span class="sr-only">Mostrar Respuestas</span>
           </button>
 
           <button class="shuffle-button" onclick="shuffleVerbs()" aria-label="Mezclar verbs">
-            <!-- SVG: shuffle (clean, balanced arrows) -->
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <!-- bottom-left -> top-right -->
-              <path d="M3 17l6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M3 21v-4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M21 7l-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M21 3v4h-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+            <span class="material-symbols-outlined" aria-hidden="true">shuffle</span>
             <span class="sr-only">Mezclar Verbos</span>
           </button>
         </div>
