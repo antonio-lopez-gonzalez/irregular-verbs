@@ -156,23 +156,43 @@
         justify-content: center;
       }
 
-      /* Botones principales: cuadrados con icono centrado */
+      /* Botones principales: cuadrados con icono centrado (más grandes y con fondo circular sutil) */
       button {
         padding: 0;
         border: none;
-        width: 48px;
-        height: 48px;
-        border-radius: 8px;
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
         cursor: pointer;
         color: white;
         transition: transform 0.12s ease, box-shadow 0.12s ease;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0,0,0,0.06) inset;
         position: relative;
         overflow: visible;
       }
+
+      /* sutil círculo detrás del icono para darle profundidad */
+      button::after {
+        content: '';
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.06);
+        z-index: 0;
+        transition: background 0.15s ease, transform 0.15s ease;
+      }
+
+      /* icono en primer plano */
+      button svg { z-index: 1; width: 28px; height: 28px; }
+
+  /* show-button: alternar eye / eye-off según aria-pressed */
+  .show-button .icon-eye-off { display: none; }
+  .show-button[aria-pressed="true"] .icon-eye { display: none; }
+  .show-button[aria-pressed="true"] .icon-eye-off { display: block; }
 
       /* Visually hidden but accessible text for screen readers */
       .sr-only {
@@ -188,26 +208,28 @@
       }
 
       button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.14);
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
       }
+
+      button:hover::after { background: rgba(255,255,255,0.09); transform: scale(1.04); }
 
       button:active {
         transform: translateY(0);
       }
 
       /* Botones: colores planos (sin gradiente) y estilo coherente */
-      .check-button { background: #5b6ff6; }
-      .check-button:hover { background: #4a57d9; }
+  .check-button { background: #5060f5; }
+  .check-button:hover { background: #3f4ee0; }
 
-      .show-button { background: #10b981; }
-      .show-button:hover { background: #0e9a68; }
+  .show-button { background: #12b76a; }
+  .show-button:hover { background: #0fa05a; }
 
-      .reset-button { background: #ef4444; }
-      .reset-button:hover { background: #d33a3a; }
+  .reset-button { background: #ef4444; }
+  .reset-button:hover { background: #d33a3a; }
 
-      .shuffle-button { background: #f472b6; }
-      .shuffle-button:hover { background: #e2569f; }
+  .shuffle-button { background: #f973b2; }
+  .shuffle-button:hover { background: #ec4d9a; }
 
       .correct {
         border-color: #38ef7d !important;
@@ -415,19 +437,23 @@
           margin-bottom: 10px;
         }
 
-        /* En móvil: mostrar los botones en 2 columnas pero usando los cuadrados definidos */
+        /* En móvil: mostrar los botones en una fila horizontal (sin agrupar en 2 columnas) */
         .action-buttons {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
+          display: flex;
+          flex-direction: row;
           gap: 10px;
+          justify-content: center;
           align-items: center;
-          justify-items: center;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          padding-bottom: 6px; /* espacio para la posible barra de scroll */
         }
 
         .action-buttons button {
-          width: 44px;
-          height: 44px;
+          width: 48px;
+          height: 48px;
           padding: 0;
+          flex: 0 0 auto;
         }
 
         table {
@@ -458,38 +484,50 @@
       <div class="buttons">
         <div class="action-buttons" role="toolbar" aria-label="Acciones">
           <button class="reset-button" onclick="resetAnswers()" aria-label="Reiniciar">
-            <!-- SVG: refresh -->
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M21 12a9 9 0 10-3.2 6.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M21 3v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- SVG: refresh (más completo) -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M21 12a9 9 0 10-3.2 6.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 3v6h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3.51 12.49a7 7 0 011.98-2.91" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
             </svg>
             <span class="sr-only">Reiniciar</span>
           </button>
 
           <button class="check-button" onclick="checkAnswers()" aria-label="Verificar">
-            <!-- SVG: check -->
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- SVG: check (círculo con tick) -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6" opacity="0.14" />
+              <path d="M7.5 12.5l2.5 2.5L16.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span class="sr-only">Verificar</span>
           </button>
 
           <button class="show-button" onclick="toggleAnswers()" aria-label="Mostrar respuestas" aria-pressed="false">
-            <!-- SVG: eye -->
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+            <!-- SVG: eye (visible when answers are hidden) -->
+            <svg class="icon-eye" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M2.5 12s4-6.5 9.5-6.5S21.5 12 21.5 12s-4 6.5-9.5 6.5S2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+            <!-- SVG: eye-off (bolder, high-contrast slash) -->
+            <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- eye outline -->
+              <path d="M2 12s4-6.5 10-6.5S22 12 22 12s-4 6.5-10 6.5S2 12 2 12z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <!-- pupil -->
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8" fill="none" />
+              <!-- diagonal slash -->
+              <path d="M3 3l18 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span class="sr-only">Mostrar Respuestas</span>
           </button>
 
           <button class="shuffle-button" onclick="shuffleVerbs()" aria-label="Mezclar verbs">
-            <!-- SVG: shuffle -->
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M16 3h5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M21 3L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M4 21h5v-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M3 21l9-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- SVG: shuffle (clean, balanced arrows) -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- bottom-left -> top-right -->
+              <path d="M3 17l6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M3 21v-4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M21 7l-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M21 3v4h-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span class="sr-only">Mezclar Verbos</span>
           </button>
