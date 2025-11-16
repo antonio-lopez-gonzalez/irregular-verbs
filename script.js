@@ -614,3 +614,113 @@ function shuffleVerbs() {
 
 // Inicializar la tabla cuando se carga la página
 document.addEventListener("DOMContentLoaded", createVerbTable);
+
+// ---------------- Quiz logic ----------------
+let quizState = {
+  running: false,
+  currentVerb: null,
+};
+
+function startQuiz() {
+  const modal = document.getElementById("quizModal");
+  if (!quizState.running) {
+    quizState.running = true;
+    pickRandomVerb();
+  }
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function pickRandomVerb() {
+  quizState.currentVerb =
+    irregularVerbs[Math.floor(Math.random() * irregularVerbs.length)];
+  showQuizQuestion();
+}
+
+function showQuizQuestion() {
+  const q = quizState.currentVerb;
+  document.getElementById("quizQuestion").textContent = q.base;
+  document.getElementById("quizMeaning").textContent = q.meaning || "";
+  const s = document.getElementById("quizSimple");
+  const p = document.getElementById("quizParticiple");
+  s.value = "";
+  p.value = "";
+  s.className = "";
+  p.className = "";
+  document.getElementById("quizFeedback").textContent = "";
+  document.getElementById("quizAnswers").textContent = "";
+  document.getElementById("quizResult").hidden = true;
+  document.getElementById("quizNext").textContent = "Siguiente";
+  setTimeout(() => document.getElementById("quizSimple").focus(), 100);
+  // attach blur handlers
+  const simp = document.getElementById("quizSimple");
+  const part = document.getElementById("quizParticiple");
+  if (simp && part) {
+    simp.onblur = () => checkQuizField("simple");
+    part.onblur = () => checkQuizField("participle");
+  }
+}
+
+function normalizeAnswer(ans) {
+  return ans.toLowerCase().trim();
+}
+
+function matchesAny(inputValue, correctValue) {
+  if (!inputValue) return false;
+  const normalized = normalizeAnswer(inputValue);
+  // correctValue may contain alternatives separated by '/'
+  const options = correctValue.split("/").map((o) => o.trim().toLowerCase());
+  return options.some((opt) => opt === normalized);
+}
+
+// mark a single quiz field on blur like the main table
+function checkQuizField(field) {
+  const q = quizState.currentVerb;
+  if (!q) return;
+  if (field === "simple") {
+    const s = document.getElementById("quizSimple");
+    if (!s) return;
+    const ok = matchesAny(s.value, q.pastSimple);
+    s.className = ok ? "correct" : s.value.trim() ? "incorrect" : "";
+  } else if (field === "participle") {
+    const p = document.getElementById("quizParticiple");
+    if (!p) return;
+    const ok = matchesAny(p.value, q.pastParticiple);
+    p.className = ok ? "correct" : p.value.trim() ? "incorrect" : "";
+  }
+}
+
+function nextQuiz() {
+  pickRandomVerb();
+}
+
+function toggleQuizAnswers() {
+  const btn = document.getElementById("quizShowAnswers");
+  const answers = document.getElementById("quizAnswers");
+  const isShown = btn.getAttribute("aria-pressed") === "true";
+  if (isShown) {
+    btn.setAttribute("aria-pressed", "false");
+    answers.textContent = "";
+  } else {
+    btn.setAttribute("aria-pressed", "true");
+    const q = quizState.currentVerb;
+    answers.innerHTML = `<strong>Respuestas:</strong> ${q.pastSimple} / ${q.pastParticiple}`;
+  }
+}
+
+function closeQuiz() {
+  const modal = document.getElementById("quizModal");
+  modal.setAttribute("aria-hidden", "true");
+  // do not reset quizState.running so the user can resume if they reopen mid-quiz
+}
+
+// allow Enter to submit on inputs
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    const modal = document.getElementById("quizModal");
+    if (modal && modal.getAttribute("aria-hidden") === "false") {
+      e.preventDefault();
+      // if quiz finished, do nothing
+      nextQuiz();
+    }
+  }
+});
