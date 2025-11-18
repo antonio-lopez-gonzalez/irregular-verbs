@@ -1,5 +1,4 @@
-
-      * {
+* {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -503,3 +502,25 @@
         }
       }
     
+.speak-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    color: #667eea;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    box-shadow: none;
+}
+
+.speak-button:hover {
+    color: #764ba2;
+}
+
+.speak-button .material-symbols-outlined {
+    font-size: 20px;
+}

@@ -484,14 +484,23 @@ function createVerbTable() {
     row.innerHTML = `
             <td>
                 ${verb.base}
+                <button class="speak-button" onclick="speak('${verb.base}')">
+                    <span class="material-symbols-outlined">volume_up</span>
+                </button>
                 <div style="font-size: 0.8em; color: #666;">${verb.meaning}</div>
             </td>
             <td>
                 <input type="text" class="past-simple" data-verb="${verb.base}">
+                <button class="speak-button" onclick="speak('${verb.pastSimple}')">
+                    <span class="material-symbols-outlined">volume_up</span>
+                </button>
                 <div class="answer past-simple-answer">${verb.pastSimple}</div>
             </td>
             <td>
                 <input type="text" class="past-participle" data-verb="${verb.base}">
+                <button class="speak-button" onclick="speak('${verb.pastParticiple}')">
+                    <span class="material-symbols-outlined">volume_up</span>
+                </button>
                 <div class="answer past-participle-answer">${verb.pastParticiple}</div>
             </td>
         `;
@@ -768,3 +777,17 @@ document.addEventListener("keydown", (e) => {
     }
   }
 });
+
+// Text-to-speech function
+function speak(text, lang = "en-US") {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  speechSynthesis.speak(utterance);
+}
+
+// Text-to-speech function
+function speak(text, lang = "en-US") {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  speechSynthesis.speak(utterance);
+}
