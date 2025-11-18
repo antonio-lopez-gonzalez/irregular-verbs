@@ -651,12 +651,14 @@ function showQuizQuestion() {
   document.getElementById("quizResult").hidden = true;
   document.getElementById("quizNext").textContent = "Siguiente";
   setTimeout(() => document.getElementById("quizSimple").focus(), 100);
-  // attach blur handlers
+  // attach event handlers
   const simp = document.getElementById("quizSimple");
   const part = document.getElementById("quizParticiple");
   if (simp && part) {
     simp.onblur = () => checkQuizField("simple");
     part.onblur = () => checkQuizField("participle");
+    simp.oninput = () => liveCheckQuizField("simple");
+    part.oninput = () => liveCheckQuizField("participle");
   }
 }
 
@@ -672,20 +674,62 @@ function matchesAny(inputValue, correctValue) {
   return options.some((opt) => opt === normalized);
 }
 
+// Live validation on input: show green if correct, but don't show red
+function liveCheckQuizField(field) {
+  const q = quizState.currentVerb;
+  if (!q) return;
+  let input, correctValue;
+
+  if (field === "simple") {
+    input = document.getElementById("quizSimple");
+    correctValue = q.pastSimple;
+  } else {
+    // participle
+    input = document.getElementById("quizParticiple");
+    correctValue = q.pastParticiple;
+  }
+  if (!input) return;
+
+  const isCorrect = matchesAny(input.value, correctValue);
+
+  if (isCorrect) {
+    input.classList.add("correct");
+    input.classList.remove("incorrect");
+  } else {
+    input.classList.remove("correct");
+  }
+}
+
 // mark a single quiz field on blur like the main table
 function checkQuizField(field) {
   const q = quizState.currentVerb;
   if (!q) return;
+  let input, correctValue;
   if (field === "simple") {
-    const s = document.getElementById("quizSimple");
-    if (!s) return;
-    const ok = matchesAny(s.value, q.pastSimple);
-    s.className = ok ? "correct" : s.value.trim() ? "incorrect" : "";
+    input = document.getElementById("quizSimple");
+    correctValue = q.pastSimple;
   } else if (field === "participle") {
-    const p = document.getElementById("quizParticiple");
-    if (!p) return;
-    const ok = matchesAny(p.value, q.pastParticiple);
-    p.className = ok ? "correct" : p.value.trim() ? "incorrect" : "";
+    input = document.getElementById("quizParticiple");
+    correctValue = q.pastParticiple;
+  } else {
+    return;
+  }
+  if (!input) return;
+
+  // If empty, remove all validation classes
+  if (!input.value.trim()) {
+    input.classList.remove("correct", "incorrect");
+    return;
+  }
+
+  const isCorrect = matchesAny(input.value, correctValue);
+
+  if (isCorrect) {
+    input.classList.add("correct");
+    input.classList.remove("incorrect");
+  } else {
+    input.classList.add("incorrect");
+    input.classList.remove("correct");
   }
 }
 
