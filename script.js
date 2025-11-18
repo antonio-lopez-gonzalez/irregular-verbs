@@ -663,6 +663,21 @@ function showQuizQuestion() {
   document.getElementById("quizAnswers").textContent = "";
   document.getElementById("quizResult").hidden = true;
   document.getElementById("quizNext").textContent = "Siguiente";
+  
+  // Actualizar botones de altavoz
+  const questionSpeak = document.getElementById("quizQuestionSpeak");
+  const simpleSpeak = document.getElementById("quizSimpleSpeak");
+  const participleSpeak = document.getElementById("quizParticipleSpeak");
+  if (questionSpeak) {
+    questionSpeak.onclick = () => speak(q.base);
+  }
+  if (simpleSpeak) {
+    simpleSpeak.onclick = () => speak(q.pastSimple);
+  }
+  if (participleSpeak) {
+    participleSpeak.onclick = () => speak(q.pastParticiple);
+  }
+  
   setTimeout(() => document.getElementById("quizSimple").focus(), 100);
   // attach event handlers
   const simp = document.getElementById("quizSimple");

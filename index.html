@@ -51,14 +51,29 @@
         <button class="quiz-show-answers" id="quizShowAnswers" aria-pressed="false" onclick="toggleQuizAnswers()" aria-label="Mostrar respuestas">
           <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
         </button>
-        <div class="quiz-question" id="quizQuestion">Verb</div>
+        <div class="quiz-question-wrapper">
+          <div class="quiz-question" id="quizQuestion">Verb</div>
+          <button class="speak-button" id="quizQuestionSpeak" onclick="speak('')" aria-label="Escuchar verbo">
+            <span class="material-symbols-outlined">volume_up</span>
+          </button>
+        </div>
         <div class="quiz-meaning" id="quizMeaning"></div>
         <div class="quiz-inputs">
           <label>Past Simple
-            <input id="quizSimple" type="text" autocomplete="off">
+            <div class="input-wrapper">
+              <input id="quizSimple" type="text" autocomplete="off">
+              <button class="speak-button" id="quizSimpleSpeak" onclick="speak('')" aria-label="Escuchar past simple">
+                <span class="material-symbols-outlined">volume_up</span>
+              </button>
+            </div>
           </label>
           <label>Past Participle
-            <input id="quizParticiple" type="text" autocomplete="off">
+            <div class="input-wrapper">
+              <input id="quizParticiple" type="text" autocomplete="off">
+              <button class="speak-button" id="quizParticipleSpeak" onclick="speak('')" aria-label="Escuchar past participle">
+                <span class="material-symbols-outlined">volume_up</span>
+              </button>
+            </div>
           </label>
         </div>
         <div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div>
