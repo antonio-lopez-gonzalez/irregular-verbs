@@ -490,17 +490,21 @@ function createVerbTable() {
                 <div style="font-size: 0.8em; color: #666;">${verb.meaning}</div>
             </td>
             <td>
-                <input type="text" class="past-simple" data-verb="${verb.base}">
-                <button class="speak-button" onclick="speak('${verb.pastSimple}')">
-                    <span class="material-symbols-outlined">volume_up</span>
-                </button>
+                <div class="input-wrapper">
+                    <input type="text" class="past-simple" data-verb="${verb.base}">
+                    <button class="speak-button" onclick="speak('${verb.pastSimple}')">
+                        <span class="material-symbols-outlined">volume_up</span>
+                    </button>
+                </div>
                 <div class="answer past-simple-answer">${verb.pastSimple}</div>
             </td>
             <td>
-                <input type="text" class="past-participle" data-verb="${verb.base}">
-                <button class="speak-button" onclick="speak('${verb.pastParticiple}')">
-                    <span class="material-symbols-outlined">volume_up</span>
-                </button>
+                <div class="input-wrapper">
+                    <input type="text" class="past-participle" data-verb="${verb.base}">
+                    <button class="speak-button" onclick="speak('${verb.pastParticiple}')">
+                        <span class="material-symbols-outlined">volume_up</span>
+                    </button>
+                </div>
                 <div class="answer past-participle-answer">${verb.pastParticiple}</div>
             </td>
         `;
